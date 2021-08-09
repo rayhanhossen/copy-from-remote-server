@@ -57,7 +57,7 @@ class RemoteServerOperation:
                     else:
                         print("File list is empty")
                 else:
-                    print("Remote directory not exists")
+                    print("Remote directory is not exists")
             else:
                 # create local directory if not exists
                 os.mkdir(localdir)
