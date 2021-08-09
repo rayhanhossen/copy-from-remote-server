@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+paramiko = "2.7.2"
+pysftp = "0.2.9"
+python-decouple = "3.4"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
