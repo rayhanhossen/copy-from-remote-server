@@ -1,19 +1,22 @@
 import pysftp
 import paramiko
-from decouple import config
 
 
-class RemoteServerConnection:
-    def __init__(self):
-        self.host = config("REMOTE_HOST")
-        self.username = config("REMOTE_USERNAME")
-        self.password = config("REMOTE_PASSWORD")
-
-    def connect(self):
+class RemoteServerConnection(pysftp.Connection):
+    def __init__(self, *args, **kwargs):
         try:
-            sftp = pysftp.Connection(host=self.host, username=self.username, password=self.password)
-            print("SFTP server connected successfully")
-            return sftp
+            if kwargs.get('cnopts') is None:
+                kwargs['cnopts'] = pysftp.CnOpts()
+        except pysftp.HostKeysException as e:
+            self._init_error = True
+            raise paramiko.ssh_exception.SSHException(str(e))
+        else:
+            self._init_error = False
 
-        except paramiko.ssh_exception.SSHException as e:
-            print(e)
+        self._sftp_live = False
+        self._transport = None
+        super().__init__(*args, **kwargs)
+
+    def __del__(self):
+        if not self._init_error:
+            self.close()
