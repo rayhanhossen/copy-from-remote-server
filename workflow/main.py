@@ -15,8 +15,7 @@ def main():
             # remote server object
             remote_server = RemoteServerOperation(sftp_connection)
             # copy files from remote server directory
-            remote_server.copy_file_from_remote(localdir='D:\\Divergent\\RPA\\dump',
-                                                remotedir='/opt/dump')
+            remote_server.copy_file_from_remote(localdir='D:\\Divergent\\RPA\\dump', remotedir='/opt/dump')
     except paramiko.ssh_exception.SSHException as e:
         print('SSH error, you need to add the public key of your remote in your local known_hosts file first.', e)
 
